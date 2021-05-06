@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {DialogAddPersonComponent} from './dialog-add-person/dialog-add-person.component';
+import {DialogChangeLvlComponent} from './dialog-change-lvl/dialog-change-lvl.component';
 
 @Component({
   selector: 'app-people-mgmt',
@@ -50,6 +51,22 @@ export class PeopleMgmtComponent implements OnInit {
     dialogRef.afterClosed().subscribe(name => {
       if (!!name) {
         this.addTeamMember(name);
+      }
+    });
+  }
+
+  openChangeLvlDialog(member: TMember, skill: TSkill, style: number): void {
+    const dialogRef = this.dialog.open(DialogChangeLvlComponent, {
+      data: {
+        memberName: member.name,
+        skillName: skill.name,
+        level: member.skills.get(skill.name),
+        style
+      }
+    });
+    dialogRef.afterClosed().subscribe(skillVariant => {
+      if (!!skillVariant) {
+        member.skills.set(skillVariant.skillName, skillVariant.level);
       }
     });
   }

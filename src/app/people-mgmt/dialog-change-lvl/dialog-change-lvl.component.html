@@ -1,1 +1,10 @@
-<p>dialog-change-lvl works!</p>
+<h1>{{data.skillName}} <small>({{data.memberName}})</small></h1>
+
+<div>
+  <button *ngFor="let skillVariant of skillVariants" mat-raised-button (click)="closeDialog(skillVariant)"
+          [color]="(skillVariant.level === data.level) ? 'primary' : 'basic'">
+    {{skillVariant.skillName}} - {{skillVariant.level}}
+  </button>
+</div>
+
+<button mat-button mat-dialog-close>Cancel</button>
