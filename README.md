@@ -9,4 +9,5 @@ Using https://www.npmjs.com/package/angular-cli-ghpages
 ng deploy
 --repo=https://github.com/[organization]/[repo].git
 --name="[username]" --email="[email]"
+--base-href="[repo]"
 ```
