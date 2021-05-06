@@ -11,3 +11,7 @@ ng deploy
 --name="[username]" --email="[email]"
 --base-href="[repo]"
 ```
+
+## Sonar
+[![Quality Gate
+Status](https://sonarcloud.io/api/project_badges/measure?project=jankudev-work_mapping-skills-prototype-ui&metric=alert_status)](https://sonarcloud.io/dashboard?id=jankudev-work_mapping-skills-prototype-ui)
