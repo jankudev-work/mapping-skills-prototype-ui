@@ -9,7 +9,7 @@
     </tr>
     <tr *ngFor="let member of team; index as i">
       <th class="left">{{member.name}}</th>
-      <td class="skill-lvl" *ngFor="let skill of teamSkills" (click)="openChangeLvlDialog(member, skill, i)">
+      <td class="skill-lvl" *ngFor="let skill of teamSkills" (click)="openChangeLvlDialog(member, skill, i%4)">
         <div class="skill-lvl-graph-{{i%4}}">
           <div class="circle-overlay"></div>
           <div class="circle-line-horizontal"></div>
