@@ -12,7 +12,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogAddPersonComponent } from './dialog-add-person/dialog-add-person.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatMenuModule} from '@angular/material/menu';
 import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from '@angular/material/snack-bar';
 import { DialogChangeLvlComponent } from './dialog-change-lvl/dialog-change-lvl.component';
 import { DialogAddSkillComponent } from './dialog-add-skill/dialog-add-skill.component';
@@ -38,6 +39,7 @@ import { StorageServiceModule } from 'ngx-webstorage-service';
     MatButtonModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatMenuModule,
     StorageServiceModule
   ],
   providers: [

@@ -24,12 +24,21 @@ th.left {
 }
 
 td.skill-lvl {
-  border: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
   width: 30px;
   height: 30px;
 }
 
 td.skill-lvl:hover {
   cursor: pointer;
+  background-color: beige;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover {
   background-color: beige;
 }

@@ -74,6 +74,17 @@ export class AppComponent implements OnInit {
     });
   }
 
+  removeMember(name: string): void {
+    this.team.splice(this.team.findIndex(value => value.name === name), 1);
+  }
+
+  removeSkill(name: string): void {
+    this.teamSkills.splice(this.teamSkills.findIndex(value => value.name === name), 1);
+    this.team.forEach(member => {
+      member.skills.delete(name);
+    });
+  }
+
   /* UI components methods and events handling */
   openAddPersonDialog(): void {
     const dialogRef = this.dialog.open(DialogAddPersonComponent);

@@ -95,10 +95,28 @@
     <table>
       <tr>
         <th></th>
-        <th class="rotate" *ngFor="let skill of teamSkills"><div><span>{{skill.name}}</span></div></th>
+        <th class="rotate" *ngFor="let skill of teamSkills">
+          <div>
+            <span class="clickable" [matMenuTriggerFor]="skillMenu" aria-label="Menu">{{skill.name}}</span>
+            <mat-menu #skillMenu="matMenu">
+              <button mat-menu-item (click)="removeSkill(skill.name)">
+                <mat-icon>delete</mat-icon>
+                <span>Remove</span>
+              </button>
+            </mat-menu>
+          </div>
+        </th>
       </tr>
       <tr *ngFor="let member of team; index as i">
-        <th class="left">{{member.name}}</th>
+        <th class="left">
+          <span class="clickable" [matMenuTriggerFor]="memberMenu" aria-label="Menu">{{member.name}}</span>
+          <mat-menu #memberMenu="matMenu">
+            <button mat-menu-item (click)="removeMember(member.name)">
+              <mat-icon>delete</mat-icon>
+              <span>Remove</span>
+            </button>
+          </mat-menu>
+        </th>
         <td class="skill-lvl" *ngFor="let skill of teamSkills" (click)="openChangeLvlDialog(member, skill, i%6)">
           <div class="skill-lvl-graph-{{i%6}}">
             <div class="circle-overlay"></div>
