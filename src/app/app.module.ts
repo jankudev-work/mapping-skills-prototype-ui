@@ -13,8 +13,11 @@ import { DialogAddPersonComponent } from './dialog-add-person/dialog-add-person.
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule} from '@angular/material/snack-bar';
 import { DialogChangeLvlComponent } from './dialog-change-lvl/dialog-change-lvl.component';
 import { DialogAddSkillComponent } from './dialog-add-skill/dialog-add-skill.component';
+
+import { StorageServiceModule } from 'ngx-webstorage-service';
 
 @NgModule({
   declarations: [
@@ -33,9 +36,13 @@ import { DialogAddSkillComponent } from './dialog-add-skill/dialog-add-skill.com
     MatTableModule,
     MatSelectModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule,
+    StorageServiceModule
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 1500}}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
