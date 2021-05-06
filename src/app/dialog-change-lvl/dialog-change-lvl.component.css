@@ -1,0 +1,19 @@
+tr.selected {
+  border: dotted 1px black;
+  background-color: antiquewhite;
+}
+
+tr:hover {
+  cursor: pointer;
+  background-color: beige;
+}
+
+td {
+  width: 30px;
+  height: 30px;
+}
+
+td.wide {
+  padding: 4px 10px 4px 10px;
+  width: 400px;
+}

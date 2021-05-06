@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {Component, NgModule, OnInit} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -7,26 +7,24 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PeopleMgmtComponent } from './people-mgmt/people-mgmt.component';
-import { DialogAddPersonComponent } from './people-mgmt/dialog-add-person/dialog-add-person.component';
+import { DialogAddPersonComponent } from './dialog-add-person/dialog-add-person.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
-import {MatDialogModule} from '@angular/material/dialog';
-import { DialogChangeLvlComponent } from './people-mgmt/dialog-change-lvl/dialog-change-lvl.component';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { DialogChangeLvlComponent } from './dialog-change-lvl/dialog-change-lvl.component';
+import { DialogAddSkillComponent } from './dialog-add-skill/dialog-add-skill.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PeopleMgmtComponent,
     DialogAddPersonComponent,
-    DialogChangeLvlComponent
+    DialogChangeLvlComponent,
+    DialogAddSkillComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     MatIconModule,
     FormsModule,

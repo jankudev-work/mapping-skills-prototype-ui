@@ -4,7 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 @Component({
   selector: 'app-dialog-change-lvl',
   templateUrl: './dialog-change-lvl.component.html',
-  styleUrls: ['./dialog-change-lvl.component.css']
+  styleUrls: ['./dialog-change-lvl.component.css', '../../assets/shared.css']
 })
 export class DialogChangeLvlComponent {
 

@@ -1,0 +1,35 @@
+th.rotate {
+  /* Something you can count on */
+  height: 140px;
+  white-space: nowrap;
+}
+
+th.rotate > div {
+  transform:
+    /* Magic Numbers */
+    translate(13px, 50px)
+      /* 45 is really 360 - 45 */
+    rotate(300deg);
+  width: 30px;
+}
+th.rotate > div > span {
+  border-bottom: 1px solid #ccc;
+  padding: 5px 10px;
+}
+
+th.left {
+  text-align: right;
+  padding-right: 1em;
+  border-bottom: 1px solid #ccc;
+}
+
+td.skill-lvl {
+  border: 1px solid #ccc;
+  width: 30px;
+  height: 30px;
+}
+
+td.skill-lvl:hover {
+  cursor: pointer;
+  background-color: beige;
+}
