@@ -1,31 +1,9 @@
 <div>
   <mat-form-field appearance="fill" class="long-input-field">
     <mat-label>Name</mat-label>
-    <input matInput type="text" [(ngModel)]="newPerson.name">
+    <input matInput type="text" [(ngModel)]="name">
   </mat-form-field>
 </div>
 
-<div>
-  <mat-form-field appearance="fill">
-    <mat-label>Job</mat-label>
-    <mat-select [(value)]="newPerson.job">
-      <mat-option *ngFor="let job of JobEnum | keyvalue" [value]="job.value">
-        {{job.value}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
-
-<div>
-  <mat-form-field appearance="fill">
-    <mat-label>Contract</mat-label>
-    <mat-select [(value)]="newPerson.contract">
-      <mat-option *ngFor="let contract of ContractEnum | keyvalue" [value]="contract.value">
-        {{contract.value}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
-
+<button mat-raised-button [mat-dialog-close]="name" color="primary">Add</button>
 <button mat-button mat-dialog-close>Cancel</button>
-<button mat-button [mat-dialog-close]="newPerson">Add</button>

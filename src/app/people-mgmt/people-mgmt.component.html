@@ -1,16 +1,30 @@
-<h1>People management</h1>
+<h1>Team skill matrix</h1>
 
-<ul>
-  <li *ngFor="let person of people">
-    <strong>{{person.name}}</strong> - {{person.job}} ({{person.contract}})
-  </li>
-</ul>
+<!-- table -->
+<div>
+  <table>
+    <tr>
+      <th></th>
+      <th class="rotate" *ngFor="let skill of teamSkills"><div><span>{{skill.name}}</span></div></th>
+    </tr>
+    <tr *ngFor="let member of team; index as i">
+      <th class="left">{{member.name}}</th>
+      <td class="skill-lvl" *ngFor="let skill of teamSkills">
+        <div class="skill-lvl-graph-{{i%4}}">
+          <div class="circle-overlay"></div>
+          <div class="circle-line-horizontal"></div>
+          <div class="circle-line-vertical"></div>
+          <div class="circle lvl-{{member.skills.get(skill.name)}}"></div>
+        </div>
+      </td>
+    </tr>
+  </table>
 
-<button mat-raised-button color="primary" (click)="openAddPersonDialog()">
-  <mat-icon aria-hidden="false" aria-label="Add person">group_add</mat-icon>
-  Add person
-</button>
-<button mat-raised-button color="primary" (click)="openAddSkillDialog()">
-  <mat-icon aria-hidden="false" aria-label="Add skill">library_add</mat-icon>
-  Add skill
-</button>
+  <br />
+
+  <button mat-raised-button color="primary" (click)="openAddPersonDialog()">
+    <mat-icon aria-hidden="false" aria-label="Add person">group_add</mat-icon>
+    Add person
+  </button>
+
+</div>

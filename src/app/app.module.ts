@@ -12,17 +12,17 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PeopleMgmtComponent } from './people-mgmt/people-mgmt.component';
 import { DialogAddPersonComponent } from './people-mgmt/dialog-add-person/dialog-add-person.component';
-import { DialogAddSkillComponent } from './people-mgmt/dialog-add-skill/dialog-add-skill.component';
-import {MatSelectModule} from "@angular/material/select";
-import {MatButtonModule} from "@angular/material/button";
-import {MatDialogModule} from "@angular/material/dialog";
+import {MatSelectModule} from '@angular/material/select';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
+import { DialogChangeLvlComponent } from './people-mgmt/dialog-change-lvl/dialog-change-lvl.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PeopleMgmtComponent,
     DialogAddPersonComponent,
-    DialogAddSkillComponent
+    DialogChangeLvlComponent
   ],
   imports: [
     BrowserModule,
