@@ -6,12 +6,13 @@ import {DialogChangeLvlComponent} from './dialog-change-lvl/dialog-change-lvl.co
 
 import {MatSnackBar} from '@angular/material/snack-bar';
 
-import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
+import {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';
+import {FileSaverService} from 'ngx-filesaver';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css', './../assets/shared.css']
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
 
@@ -19,23 +20,16 @@ export class AppComponent implements OnInit {
   public teamSkills = new Array<TSkill>();
 
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService,
+              private fileSaverService: FileSaverService,
               public dialog: MatDialog,
               private snackBar: MatSnackBar) {
   }
 
+  /** Load from local storage, otherwise populate with default mock data */
   ngOnInit(): void {
     const tmp = this.storage.get(STORAGE_KEY_CURRENT_SKILL_MATRIX);
-    console.log(JSON.stringify(tmp));
     if (tmp && tmp.team && tmp.team.length && tmp.teamSkills && tmp.teamSkills.length) {
-      this.teamSkills = tmp.teamSkills;
-
-      this.team = new Array<TMember>();
-      tmp.team.forEach((member: { name: any; skills: Iterable<readonly [string, number]>; }) => {
-        this.team.push({
-          name: member.name,
-          skills: new Map(member.skills)
-        });
-      });
+      this.initializeTeamAndSkills(tmp);
     } else {
       MOCK_TEAM_SKILLS.forEach((skill) => this.teamSkills.push({
         name: skill
@@ -52,6 +46,18 @@ export class AppComponent implements OnInit {
         });
       });
     }
+  }
+
+  private initializeTeamAndSkills(tmp: Tmp): void {
+    this.teamSkills = tmp.teamSkills;
+
+    this.team = new Array<TMember>();
+    tmp.team.forEach((member: { name: any; skills: Iterable<readonly [string, number]>; }) => {
+      this.team.push({
+        name: member.name,
+        skills: new Map(member.skills)
+      });
+    });
   }
 
   /* Component logic methods */
@@ -85,6 +91,31 @@ export class AppComponent implements OnInit {
     });
   }
 
+  export(): void {
+    const fileName = 'skillmatrix_snapshot_' + new Date().toISOString() + '.txt';
+    this.fileSaverService.save(new Blob([JSON.stringify(this.prepareSerializableObject())]), fileName);
+  }
+
+
+  handleFileInput($event: any): void {
+    const file = $event.target.files[0];
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      console.log('Importing file ' + file.name + ': ' + reader.result);
+    };
+    reader.readAsText(file);
+
+    const tmp = JSON.parse(reader.result as string);
+    console.log(tmp); /* wtf is this null !!! */
+    this.initializeTeamAndSkills(tmp);
+  }
+
+  restart(): void {
+    this.team = new Array<TMember>();
+    this.teamSkills = new Array<TSkill>();
+  }
+
   /* UI components methods and events handling */
   openAddPersonDialog(): void {
     const dialogRef = this.dialog.open(DialogAddPersonComponent);
@@ -103,6 +134,7 @@ export class AppComponent implements OnInit {
       }
     });
   }
+
   openChangeLvlDialog(member: TMember, skill: TSkill, style: number): void {
     const dialogRef = this.dialog.open(DialogChangeLvlComponent, {
       data: {
@@ -121,22 +153,28 @@ export class AppComponent implements OnInit {
 
   /* local storage backup */
   save(): void {
-    const serializeTeam = new Array();
+    const objToSerializace = this.prepareSerializableObject();
+
+    this.storage.set(STORAGE_KEY_CURRENT_SKILL_MATRIX, objToSerializace);
+
+    this.snackBar.open('Saved!');
+  }
+
+  private prepareSerializableObject(): object {
+    const serializeTeam: any[] = [];
     this.team.forEach((member) => {
       serializeTeam.push(
         {
           name: member.name,
           skills: Array.from(member.skills.entries())
-         }
+        }
       );
     });
 
-    this.storage.set(STORAGE_KEY_CURRENT_SKILL_MATRIX, {
+    return {
       team: serializeTeam,
       teamSkills: this.teamSkills
-    });
-
-    this.snackBar.open('Saved!');
+    };
   }
 }
 
@@ -149,14 +187,20 @@ export interface TMember {
   skills: Map<string, number>;
 }
 
+export interface Tmp {
+  team: any[];
+  teamSkills: Array<TSkill>;
+}
+
 const MOCK_MEMBERS = [
-  'Petr Novák',
-  'Jan Novotný',
-  'Marek Jirotka',
-  'Milada Zedníčková',
-  'Lukasz Slezina',
-  'Richard Dočekal',
-  'William Heroutchek'
+  'Malcolm Reynolds',
+  'Zoe Washburne',
+  'Hoban Washburne',
+  'Inara Sera',
+  'Jayne Cobb',
+  'Kaylee Frye',
+  'Simon Tam',
+  'River Tam'
 ];
 
 const MOCK_TEAM_SKILLS = [
@@ -165,15 +209,16 @@ const MOCK_TEAM_SKILLS = [
   'JavaScript',
   'TypeScript',
   'HTML / CSS',
-  'Enterprise architect',
-  'Architektura web aplikací',
-  'Psaní user-stories',
-  'Psaní iniciativ',
-  'Datová analytika (excel)',
-  'Datová analytika (Tableau)',
-  'Manuální testování',
-  'Aplikační podpora',
-  'Monitoring aplikací'
+  'Spring / SpringBoot',
+  'Hexagonal / Onion architecture',
+  'Microservices',
+  'DevSecOps',
+  'Kafka',
+  'Agile / Scrum',
+  'Data processing',
+  'Automated E2E testing',
+  'Application support',
+  'Monitoring'
 ];
 
 const STORAGE_KEY_CURRENT_SKILL_MATRIX = 'local_skill_matrix_current';

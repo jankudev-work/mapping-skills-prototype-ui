@@ -5,13 +5,10 @@ th.rotate {
 }
 
 th.rotate > div {
-  transform:
-    /* Magic Numbers */
-    translate(13px, 50px)
-      /* 45 is really 360 - 45 */
-    rotate(300deg);
+  transform: /* Magic Numbers */ translate(13px, 50px) /* 45 is really 360 - 45 */ rotate(300deg);
   width: 30px;
 }
+
 th.rotate > div > span {
   border-bottom: 1px solid #ccc;
   padding: 5px 10px;
