@@ -57,7 +57,7 @@
                 title="Clear everything - complete reset">
           <mat-icon aria-hidden="false" aria-label="Clear everything - complete reset">delete_forever</mat-icon>
         </button>
-        <button mat-raised-button color="basic" (click)="export()" fxLayoutAlign="end start"
+        <button mat-raised-button color="basic" (click)="export()" fxLayoutAlign="end start" fxFlexOffset="4px"
           title="Export">
           <mat-icon aria-hidden="false" aria-label="Export">cloud_download</mat-icon>
         </button>
@@ -75,4 +75,4 @@
 </div>
 
 <!-- hidden uploader for import functionality -->
-<input type="file" #uploader hidden (change)="handleFileInput($event)">
+<input type="file" #uploader hidden (click)="uploader.value = ''" (change)="handleFileInput($event)">

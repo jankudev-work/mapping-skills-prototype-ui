@@ -16,13 +16,17 @@ import {FileSaverService} from 'ngx-filesaver';
 })
 export class AppComponent implements OnInit {
 
-  public team = new Array<TMember>();
-  public teamSkills = new Array<TSkill>();
-
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService,
               private fileSaverService: FileSaverService,
               public dialog: MatDialog,
               private snackBar: MatSnackBar) {
+  }
+
+  public team = new Array<TMember>();
+  public teamSkills = new Array<TSkill>();
+
+  private static serialize(obj: object): string {
+    return JSON.stringify(obj, null, 2);
   }
 
   /** Load from local storage, otherwise populate with default mock data */
@@ -49,10 +53,17 @@ export class AppComponent implements OnInit {
   }
 
   private initializeTeamAndSkills(tmp: Tmp): void {
-    this.teamSkills = tmp.teamSkills;
+    console.log(tmp);
+
+    this.teamSkills = new Array<TSkill>();
+    tmp.teamSkills.forEach((skill) => {
+      console.log('adding skill: ' + skill);
+      this.teamSkills.push(skill);
+    });
 
     this.team = new Array<TMember>();
     tmp.team.forEach((member: { name: any; skills: Iterable<readonly [string, number]>; }) => {
+      console.log('adding team member: ' + member.name);
       this.team.push({
         name: member.name,
         skills: new Map(member.skills)
@@ -93,22 +104,24 @@ export class AppComponent implements OnInit {
 
   export(): void {
     const fileName = 'skillmatrix_snapshot_' + new Date().toISOString() + '.txt';
-    this.fileSaverService.save(new Blob([JSON.stringify(this.prepareSerializableObject())]), fileName);
+    this.fileSaverService.save(new Blob([AppComponent.serialize(this.prepareSerializableObject())]), fileName);
   }
 
 
   handleFileInput($event: any): void {
-    const file = $event.target.files[0];
+    this.readImportFile($event.target);
+  }
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      console.log('Importing file ' + file.name + ': ' + reader.result);
+  readImportFile(inputValue: any): void {
+    const file = inputValue.files[0];
+    const fileReader = new FileReader();
+
+    fileReader.onloadend = () => {
+      console.log('Importing file ' + file.name + ' (' + file.size + 'B)');
+      const fileContent = fileReader.result as string;
+      this.initializeTeamAndSkills(JSON.parse(fileContent));
     };
-    reader.readAsText(file);
-
-    const tmp = JSON.parse(reader.result as string);
-    console.log(tmp); /* wtf is this null !!! */
-    this.initializeTeamAndSkills(tmp);
+    fileReader.readAsText(file);
   }
 
   restart(): void {
